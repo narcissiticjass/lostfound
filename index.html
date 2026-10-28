@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lost&Found</title>
+
+<script type="module"
+src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js">
+</script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #100715;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  background-image:
+    linear-gradient(#ffffff09 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff09 1px, transparent 1px),
+    radial-gradient(ellipse at 80% 45%, #42184f, #100715 70%);
+  background-size: 44px 44px, 44px 44px, auto;
+  overflow: hidden;
+}
+
+nav {
+  height: 90px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #ffffff12;
+  position: relative;
+  z-index: 5;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo span, h1 span, .purple {
+  color: #c14aff;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #c8bacf;
+  font-size: 15px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #c14aff;
+}
+
+.signup {
+  padding: 12px 22px;
+  border: 1px solid #8e639b;
+  border-radius: 30px;
+  color: white;
+  background: transparent;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hero {
+  min-height: 650px;
+  padding: 90px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  position: relative;
+}
+
+/* NEW: Glowing ring image on the left */
+.portal-object {
+  width: clamp(220px, 30vw, 390px);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.portal-object img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 18px #c14aff55);
+  animation: portalGlow 4s ease-in-out infinite alternate;
+}
+
+/* NEW: Soft glowing animation */
+@keyframes portalGlow {
+  from {
+    filter: drop-shadow(0 0 12px #c14aff44);
+    transform: scale(0.98);
+  }
+
+  to {
+    filter: drop-shadow(0 0 28px #c14aff99);
+    transform: scale(1.02);
+  }
+}
+
+.scene {
+  position: absolute;
+  inset: 0 0 0 35%;
+  z-index: 0;
+}
+
+spline-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-content {
+  max-width: 560px;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  color: #c14aff;
+  letter-spacing: 3px;
+  font-size: 12px;
+  margin-bottom: 22px;
+}
+
+h1 {
+  font-size: clamp(44px, 5.5vw, 74px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+}
+
+h1 em {
+  font-family: Georgia, serif;
+  font-weight: normal;
+  color: #d6a9ed;
+}
+
+.description {
+  color: #b9acbf;
+  font-size: 17px;
+  line-height: 1.7;
+  margin-top: 24px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 15px 24px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.primary {
+  background: #c14aff;
+  color: #180920;
+  border: 1px solid #c14aff;
+}
+
+.secondary {
+  color: white;
+  background: #ffffff08;
+  border: 1px solid #8e7198;
+}
+
+.ticker {
+  display: flex;
+  justify-content: space-around;
+  padding: 23px;
+  border-top: 1px solid #ffffff15;
+  color: #d6b9e5;
+  font: italic 30px Georgia, serif;
+}
+
+.content {
+  max-width: 760px;
+  margin: auto;
+  padding: 80px 25px;
+  position: relative;
+  z-index: 1;
+}
+
+.content h1 {
+  font-size: clamp(40px, 6vw, 65px);
+}
+
+.card {
+  margin-top: 30px;
+  padding: 28px;
+  background: #1b1024;
+  border: 1px solid #ffffff20;
+  border-radius: 20px;
+  display: grid;
+  gap: 18px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: #e8dced;
+  font-size: 14px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #60456c;
+  border-radius: 9px;
+  background: #110918;
+  color: white;
+  font: inherit;
+}
+
+textarea { resize: vertical; }
+
+button { font: inherit; }
+
+.notice {
+  color: #b9acbf;
+  line-height: 1.6;
+  margin-top: 15px;
+}
+
+@media (max-width: 700px) {
+  nav {
+    height: auto;
+    padding: 18px 5%;
+    flex-wrap: wrap;
+  }
+
+  .logo { font-size: 22px; }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .nav-links a { font-size: 13px; }
+
+  .signup { padding: 10px 13px; }
+
+  .hero {
+    min-height: 650px;
+    padding: 80px 6%;
+    gap: 0;
+  }
+
+  /* NEW: Keep the ring behind the text on mobile */
+  .portal-object {
+    position: absolute;
+    width: min(90vw, 390px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.48;
+    z-index: 1;
+  }
+
+  .portal-object img {
+    animation: portalGlow 4s ease-in-out infinite alternate;
+  }
+
+  .scene {
+    inset: 0;
+    opacity: .45;
+  }
+
+  .hero-content {
+    z-index: 2;
+    flex: 1;
+  }
+
+  .ticker { font-size: 20px; }
+}
+</style>
+</head>
+
+<body>
+<div class="page" id="app"></div>
+
+<script>
+const splineURL =
+"https://my.spline.design/glassknotvortex-xMEYrnrvLzc7xNejwIoQBvpp/";
+
+const nav = (active) => `
+<nav>
+  <a class="logo" href="?page=home">Lost<span>&</span>found</a>
+  <div class="nav-links">
+    <a class="${active==='home'?'active':''}" href="?page=home">Home</a>
+    <a class="${active==='lost'?'active':''}" href="?page=lost">Lost</a>
+    <a class="${active==='found'?'active':''}" href="?page=found">Found</a>
+    <a class="${active==='about'?'active':''}" href="?page=about">About</a>
+  </div>
+  <a class="signup" href="?page=signup">Sign up ↗</a>
+</nav>`;
+
+const formPage = (kind) => {
+  const lost = kind === 'lost';
+  const title = lost
+    ? 'Report a <span>lost</span> item.'
+    : 'Found <span>something?</span>';
+
+  return `${nav(kind)}
+  <main class="content">
+    <p class="eyebrow">${lost?'LET’S BRING IT HOME':'HELP SOMEONE FIND IT'}</p>
+    <h1>${title}</h1>
+    <p class="description">${lost
+      ? 'Tell the community what you have lost.'
+      : 'Help return an item to its owner.'}</p>
+    <form class="card" id="itemForm">
+      <label>Item name
+        <input required placeholder="e.g. Black backpack">
+      </label>
+      <label>Location
+        <input required placeholder="Where was it lost or found?">
+      </label>
+      <label>Date
+        <input type="date" required>
+      </label>
+      <label>Description
+        <textarea rows="4" required placeholder="Describe the item"></textarea>
+      </label>
+      <button class="btn primary" type="submit">Submit report ↗</button>
+      <p class="notice">Demo form: reports are not saved online yet.</p>
+    </form>
+  </main>`;
+};
+
+function render() {
+  const page = new URLSearchParams(location.search).get('page') || 'home';
+  const app = document.getElementById('app');
+
+  if (page === 'lost' || page === 'found') {
+    app.innerHTML = formPage(page);
+  } else if (page === 'about') {
+    app.innerHTML = `${nav('about')}
+    <main class="content">
+      <p class="eyebrow">ABOUT US</p>
+      <h1>Every lost item deserves a <span>second chance.</span></h1>
+      <p class="description">Lost&Found helps people reconnect with belongings that matter. Report missing items or help return something you have found.</p>
+      <div class="buttons">
+        <a class="btn primary" href="?page=lost">Report lost ↗</a>
+        <a class="btn secondary" href="?page=found">I found something</a>
+      </div>
+    </main>`;
+  } else if (page === 'signup') {
+    app.innerHTML = `${nav('signup')}
+    <main class="content">
+      <p class="eyebrow">JOIN THE COMMUNITY</p>
+      <h1>Let's find it <span>together.</span></h1>
+      <form class="card" id="signupForm">
+        <label>Full name<input required placeholder="Your name"></label>
+        <label>Email<input type="email" required placeholder="you@example.com"></label>
+        <label>Password<input type="password" minlength="8" required placeholder="At least 8 characters"></label>
+        <button class="btn primary" type="submit">Create account ↗</button>
+        <p class="notice">Demo only: real account creation needs authentication setup.</p>
+      </form>
+    </main>`;
+  } else {
+    app.innerHTML = `${nav('home')}
+    <main class="hero">
+
+      <!-- NEW: Glowing object on the left -->
+      <div class="portal-object">
+        <img src="./images/glass-portal.png" alt="Purple pink glowing portal">
+      </div>
+
+      <section class="hero-content">
+        <p class="eyebrow">LOST SOMETHING?</p>
+        <h1>Lost <em>something</em> today?<br>Find it <span>here.</span></h1>
+        <p class="description">Chaque objet perdu mérite une seconde chance.</p>
+        <div class="buttons">
+          <a class="btn primary" href="?page=lost">Report lost ↗</a>
+          <a class="btn secondary" href="?page=found">Found something?</a>
+        </div>
+      </section>
+    </main>
+    <div class="ticker"><span>BBD</span><span>BBD</span><span>BBD</span><span>BBD</span></div>`;
+  }
+
+  const itemForm = document.getElementById('itemForm');
+  if (itemForm) itemForm.addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Form validated! Online report storage is not connected yet.');
+  });
+
+  const signupForm = document.getElementById('signupForm');
+  if (signupForm) signupForm.addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Form validated! Real account creation is not connected yet.');
+  });
+}
+
+window.addEventListener('popstate', render);
+document.addEventListener('click', e => {
+  const link = e.target.closest('a[href^="?page="]');
+  if (!link || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  e.preventDefault();
+  history.pushState({}, '', link.getAttribute('href'));
+  render();
+  window.scrollTo(0, 0);
+});
+render();
+</script>
+</body>
+</html>
